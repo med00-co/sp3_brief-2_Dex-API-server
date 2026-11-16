@@ -1,0 +1,23 @@
+{
+  "name": "sp3_brief-2_dex-api-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/med00-co/sp3_brief-2_Dex-API-server.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/med00-co/sp3_brief-2_Dex-API-server/issues"
+  },
+  "homepage": "https://github.com/med00-co/sp3_brief-2_Dex-API-server#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.5",
+    "tailwindcss": "^4.3.5"
+  }
+}
