@@ -1,1 +1,98 @@
 @import "tailwindcss";
+
+@theme {
+  /* ========== Colors ========== */
+
+  --color-brand-dark: #8F4519;
+  --color-brand-light: #F6E7B4;
+  --color-brand-cardVide: #e8dfbb;
+
+  --color-gold: #D4AF37;
+  --color-gold-light: #F0D060;
+  --color-gold-dark: #8A6A12;
+  --color-brand: #C8672B;
+
+  --color-panel: #1c140c;           /* main dark panel background */
+  --color-panel-light: #2a1f12;     /* slightly lighter for slots */
+  --color-panel-border: #c9a227;    /* gold border */
+
+  --color-ink: #1A1208;
+  --color-muted: #B9A06A;
+  --color-ground: #422d12;
+  --color-line: #8A6A12;
+
+  /* Card types */
+  --color-card-normal: #D6B24F;
+  --color-card-effect: #C8672B;
+  --color-card-ritual: #4E86C5;
+  --color-card-fusion: #8B5FA8;
+  --color-card-synchro: #EDEDED;
+  --color-card-xyz: #1B1B1F;
+  --color-card-link: #1F5FA8;
+  --color-card-spell: #27a298;
+  --color-card-trap: #BC5A84;
+
+  /* Attributes */
+  --color-attr-light: #F5E050;
+  --color-attr-dark: #7B3FA0;
+  --color-attr-fire: #E5322D;
+  --color-attr-water: #1E88E5;
+  --color-attr-earth: #8B5A2B;
+  --color-attr-wind: #1c9456;
+  --color-attr-divine: #D4AF37;
+
+  /* Validation */
+  --color-valid: #22C55E;
+  --color-invalid: #EF4444;
+  --color-khal: #000;
+
+  /* Disabled */
+  --color-disabled-bg: #d6d3d1;
+  --color-disabled-text: #78716c;
+  --color-disabled-border: #a8a29e;
+
+  /* ========== Background Images ========== */
+  --background-image-gold-metal: linear-gradient(135deg, #F7E27A 0%, #D4AF37 45%, #8A6A12 100%);
+
+  /* ========== Box Shadows ========== */
+  --shadow-gold: 0 0 18px rgba(212, 175, 55, 0.45);
+
+  /* ========== Fonts ========== */
+  --font-display: "Cinzel", serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "Courier New", monospace;
+
+  /* ========== Border Radius ========== */
+  --radius-card: 20px;
+}
+
+/* ========== Custom Components ========== */
+@layer components {
+  .field {
+    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5
+           text-sm text-ink outline-none transition
+           placeholder:text-muted
+           focus:border-gold focus:ring-2 focus:ring-gold/30;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/30
+           bg-white/10 px-4 py-2 text-sm font-medium text-white
+           transition hover:border-x-3 hover:border-brand cursor-pointer
+           whitespace-nowrap shrink-0;
+  }
+
+  .chip.active {
+    @apply bg-brand border-brand text-white;
+  }
+
+  .btn-primary {
+    @apply rounded-lg bg-brand px-6 py-2.5 font-bold text-white
+           transition hover:bg-brand-dark active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply rounded-lg border-2 border-line bg-transparent px-6 py-2.5 font-bold text-ink
+           transition hover:bg-invalid hover:border-invalid hover:text-white active:scale-[0.98];
+  }
+}
