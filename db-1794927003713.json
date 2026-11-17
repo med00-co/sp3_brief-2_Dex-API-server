@@ -1,0 +1,170 @@
+{
+  "creatures": [
+    {
+      "id": 1,
+      "numero": "46986414",
+      "name": "Dark Magician",
+      "attribute": "Dark",
+      "level": 7,
+      "atk": 2500,
+      "def": 2100,
+      "image": "https://images.ygoprodeck.com/images/cards/46986414.jpg",
+      "description": "Le magicien suprême, symbole de puissance et de savoir."
+    },
+    {
+      "id": 2,
+      "numero": "89631139",
+      "name": "Blue-Eyes White Dragon",
+      "attribute": "Light",
+      "level": 8,
+      "atk": 3000,
+      "def": 2500,
+      "image": "https://images.ygoprodeck.com/images/cards/89631139.jpg",
+      "description": "Dragon légendaire à la puissance d’attaque redoutable."
+    },
+    {
+      "id": 3,
+      "numero": "74677422",
+      "name": "Red-Eyes Black Dragon",
+      "attribute": "Dark",
+      "level": 7,
+      "atk": 2400,
+      "def": 2000,
+      "image": "https://images.ygoprodeck.com/images/cards/74677422.jpg",
+      "description": "Dragon noir aux yeux rouges, rare et très puissant."
+    },
+    {
+      "id": 4,
+      "numero": "70781052",
+      "name": "Summoned Skull",
+      "attribute": "Dark",
+      "level": 6,
+      "atk": 2500,
+      "def": 1200,
+      "image": "https://images.ygoprodeck.com/images/cards/70781052.jpg",
+      "description": "Démon invoqué des ténèbres, rapide et dévastateur."
+    },
+    {
+      "id": 5,
+      "numero": "91152256",
+      "name": "Celtic Guardian",
+      "attribute": "Earth",
+      "level": 4,
+      "atk": 1400,
+      "def": 1200,
+      "image": "https://images.ygoprodeck.com/images/cards/91152256.jpg",
+      "description": "Elfe guerrier, fidèle à son épée et à son honneur."
+    },
+    {
+      "id": 6,
+      "numero": "6368038",
+      "name": "Gaia the Fierce Knight",
+      "attribute": "Earth",
+      "level": 7,
+      "atk": 2300,
+      "def": 2100,
+      "image": "https://images.ygoprodeck.com/images/cards/6368038.jpg",
+      "description": "Chevalier en armure vert, il charge à cheval avec sa lance."
+    },
+    {
+      "id": 7,
+      "numero": "38033121",
+      "name": "Dark Magician Girl",
+      "attribute": "Dark",
+      "level": 6,
+      "atk": 2000,
+      "def": 1700,
+      "image": "https://images.ygoprodeck.com/images/cards/38033121.jpg",
+      "description": "Apprentie du Dark Magician, pleine de talent et d’énergie."
+    },
+    {
+      "id": 8,
+      "numero": "40640057",
+      "name": "Kuriboh",
+      "attribute": "Dark",
+      "level": 1,
+      "atk": 300,
+      "def": 200,
+      "image": "https://images.ygoprodeck.com/images/cards/40640057.jpg",
+      "description": "Petite boule de poils mignonne qui protège son maître."
+    },
+    {
+      "id": 9,
+      "numero": "71625222",
+      "name": "Time Wizard",
+      "attribute": "Light",
+      "level": 2,
+      "atk": 500,
+      "def": 400,
+      "image": "https://images.ygoprodeck.com/images/cards/71625222.jpg",
+      "description": "Magicien qui joue avec le temps et le hasard."
+    },
+    {
+      "id": 10,
+      "numero": "77585513",
+      "name": "Jinzo",
+      "attribute": "Dark",
+      "level": 6,
+      "atk": 2400,
+      "def": 1500,
+      "image": "https://images.ygoprodeck.com/images/cards/77585513.jpg",
+      "description": "Cyborg sombre qui bloque les pièges de l’adversaire."
+    },
+    {
+      "id": 11,
+      "numero": "78193831",
+      "name": "Buster Blader",
+      "attribute": "Earth",
+      "level": 7,
+      "atk": 2600,
+      "def": 2300,
+      "image": "https://images.ygoprodeck.com/images/cards/78193831.jpg",
+      "description": "Guerrier à la grande épée, spécialiste des dragons."
+    },
+    {
+      "id": 12,
+      "numero": "15025844",
+      "name": "Mystical Elf",
+      "attribute": "Light",
+      "level": 4,
+      "atk": 800,
+      "def": 2000,
+      "image": "https://images.ygoprodeck.com/images/cards/15025844.jpg",
+      "description": "Elfe mystique qui protège avec une défense solide."
+    },
+    {
+      "id": 13,
+      "numero": "45231177",
+      "name": "Flame Swordsman",
+      "attribute": "Fire",
+      "level": 5,
+      "atk": 1800,
+      "def": 1600,
+      "image": "https://images.ygoprodeck.com/images/cards/45231177.jpg",
+      "description": "Épéiste dont la lame enflammée brûle ses ennemis."
+    },
+    {
+      "id": 14,
+      "numero": "76812113",
+      "name": "Harpie Lady",
+      "attribute": "Wind",
+      "level": 4,
+      "atk": 1300,
+      "def": 1400,
+      "image": "https://images.ygoprodeck.com/images/cards/76812113.jpg",
+      "description": "Femme oiseau agile, elle attaque depuis le ciel."
+    },
+    {
+      "id": 15,
+      "numero": "23771716",
+      "name": "7 Colored Fish",
+      "attribute": "Water",
+      "level": 4,
+      "atk": 1800,
+      "def": 800,
+      "image": "https://images.ygoprodeck.com/images/cards/23771716.jpg",
+      "description": "Poisson aux sept couleurs qui nage dans les mers lointaines."
+    }
+  ],
+  "teams": []
+}
