@@ -62,3 +62,4 @@ export const deleteCreature = (id) => {
     const route = `/creatures/${id}`
     return request('DELETE', route)
 }
+

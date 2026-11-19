@@ -82,7 +82,7 @@
   }
 
   .chip.active {
-  @apply border-amber-300 bg-amber-500 font-bold text-stone-950 shadow-md 
+  @apply border-amber-300 bg-amber-500! font-bold! text-stone-950! shadow-md 
   shadow-amber-500/20;
   }
 

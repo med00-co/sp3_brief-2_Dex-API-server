@@ -1,10 +1,9 @@
 // imports -----------------------------------------------
-import { BASE_URL, getCreature , getCreatures } from "./api.js"
-import { renderGrid, showLoading , updateCount,   } from "./ui.js";
+import { getCreatures } from "./api.js"
+import { renderGrid, showLoading , updateCount, showStatus, hideStatus , updateFilterDesign,  } from "./ui.js";
 // ----------------------------------------------------
 // -----------------------VARIABLES-------------------------------
-let currentSearch = ""
-let currentFilter = ""
+
 const grid = document.getElementById('grid')
 
 let params = {
@@ -13,7 +12,7 @@ let params = {
     _sort : "" ,
     _order : "",
 }
-
+const filters = document.getElementById('filters')
 // ----------------------------------------loadCreatures()
 export const loadCreatures = async () => {
      showLoading(grid)
@@ -21,15 +20,26 @@ export const loadCreatures = async () => {
      try{
         const creatures = await getCreatures(params)
         grid.innerHTML = ""
-        if (!creatures) grid.innerHTML = "Aucune créature ."
+        if (!creatures || creatures.length === 0) showStatus("Aucune créature .") 
         else {
             renderGrid(creatures)
             updateCount(creatures)
         }
      }catch (error){
-        grid.innerHTML= `Erreur ${error.message}`
+        showStatus(`Erreur ${error.status}`) 
      }
 }
+// -----------------------------------------------Filter
 
+filters.addEventListener('click', (e)=>{
+    const filtre = e.target.closest('button')
+    if(!filtre) return
+    filtre.id !== 'tous' ? params.attribute = filtre.dataset.attribute : params.attribute = ""
+      
+    updateFilterDesign(params.attribute)
+    loadCreatures()
 
+})
+// --------------------------------------------------------------final thing
 loadCreatures()
+   
