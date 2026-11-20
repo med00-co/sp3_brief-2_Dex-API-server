@@ -2,7 +2,7 @@
   "creatures": [
   {
     "id": 1,
-    "numero": "46986414",
+    "numero": 46986414,
     "name": "Dark Magician",
     "attribute": "Dark",
     "level": 7,
@@ -13,7 +13,7 @@
   },
   {
     "id": 2,
-    "numero": "89631139",
+    "numero": 89631139,
     "name": "Blue-Eyes White Dragon",
     "attribute": "Light",
     "level": 8,
@@ -24,7 +24,7 @@
   },
   {
     "id": 3,
-    "numero": "74677422",
+    "numero": 74677422,
     "name": "Red-Eyes Black Dragon",
     "attribute": "Dark",
     "level": 7,
@@ -35,7 +35,7 @@
   },
   {
     "id": 4,
-    "numero": "70781052",
+    "numero": 70781052,
     "name": "Summoned Skull",
     "attribute": "Dark",
     "level": 6,
@@ -46,7 +46,7 @@
   },
   {
     "id": 5,
-    "numero": "91152256",
+    "numero": 91152256,
     "name": "Celtic Guardian",
     "attribute": "Earth",
     "level": 4,
@@ -57,7 +57,7 @@
   },
   {
     "id": 6,
-    "numero": "6368038",
+    "numero": 6368038,
     "name": "Gaia the Fierce Knight",
     "attribute": "Earth",
     "level": 7,
@@ -68,7 +68,7 @@
   },
   {
     "id": 7,
-    "numero": "38033121",
+    "numero": 38033121,
     "name": "Dark Magician Girl",
     "attribute": "Dark",
     "level": 6,
@@ -79,7 +79,7 @@
   },
   {
     "id": 8,
-    "numero": "40640057",
+    "numero": 40640057,
     "name": "Kuriboh",
     "attribute": "Dark",
     "level": 1,
@@ -90,7 +90,7 @@
   },
   {
     "id": 9,
-    "numero": "71625222",
+    "numero": 71625222,
     "name": "Time Wizard",
     "attribute": "Light",
     "level": 2,
@@ -101,7 +101,7 @@
   },
   {
     "id": 10,
-    "numero": "77585513",
+    "numero": 77585513,
     "name": "Jinzo",
     "attribute": "Dark",
     "level": 6,
@@ -112,7 +112,7 @@
   },
   {
     "id": 11,
-    "numero": "78193831",
+    "numero": 78193831,
     "name": "Buster Blader",
     "attribute": "Earth",
     "level": 7,
@@ -123,7 +123,7 @@
   },
   {
     "id": 12,
-    "numero": "15025844",
+    "numero": 15025844,
     "name": "Mystical Elf",
     "attribute": "Light",
     "level": 4,
@@ -134,7 +134,7 @@
   },
   {
     "id": 13,
-    "numero": "45231177",
+    "numero": 45231177,
     "name": "Flame Swordsman",
     "attribute": "Fire",
     "level": 5,
@@ -145,7 +145,7 @@
   },
   {
     "id": 14,
-    "numero": "76812113",
+    "numero": 76812113,
     "name": "Harpie Lady",
     "attribute": "Wind",
     "level": 4,
@@ -156,7 +156,7 @@
   },
   {
     "id": 15,
-    "numero": "23771716",
+    "numero": 23771716,
     "name": "7 Colored Fish",
     "attribute": "Water",
     "level": 4,

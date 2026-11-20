@@ -1,6 +1,9 @@
 // imports -----------------------------------------------
-import { getCreatures } from "./api.js"
-import { renderGrid, showLoading , updateCount, showStatus, hideStatus , updateFilterDesign,  } from "./ui.js";
+import { getCreatures , getCreature , } from "./api.js"
+import { renderGrid, showLoading , updateCount, showStatus,
+     hideStatus , updateFilterDesign, showDetailLoading,
+     renderDetail,
+     showDetailError, clearDetail } from "./ui.js";
 import { getSavedFilter, saveFilter } from "./storage.js";
 
 // ----------------------------------------------------
@@ -16,6 +19,8 @@ let params = {
 }
 const filters = document.getElementById('filters')
 const searchForm =  document.getElementById('search-form')
+const sortPlace = document.getElementById('sort')
+const detail = document.getElementById('detail')
 // ----------------------------------------loadCreatures()
 const loadCreatures = async () => {
      showLoading(grid)
@@ -66,6 +71,51 @@ document.getElementById("effacer-cherche").addEventListener('click', () =>{
         params.q = ""
         
         loadCreatures()
+})
+
+// ---------------------------------------- SORT ---- Part2----------------------------
+sortPlace.addEventListener('change', () => {
+    const sortValue = sortPlace.value
+    if(sortValue.length === 0){
+        params._sort = ""
+        params._order = ""
+    } else {
+        let values = sortValue.split("-")
+        params._sort = values[0]
+        params._order = values[1]
+    }
+    loadCreatures()
+})
+
+// ----------------------------------------loadDetail(id)
+const loadDetail = async (id) => {
+    showDetailLoading()
+    try {
+        const card = await getCreature(id)
+        renderDetail(card)
+    }catch (error) {
+        if(error.status === 404){
+            showDetailError('Créature Introuvable')
+        } else if (!error.status) {
+            showDetailError('Erreur de connexion avec le Serveur')
+        } else {
+            showDetailError(`Erreur ${error.status}`)
+        }
+    }
+}
+
+//----------------show detail of cards clicked--------------------
+grid.addEventListener('click', (e) =>{
+    const cardClicked = e.target.closest('article')
+    if (!cardClicked) return
+    loadDetail(cardClicked.dataset.id)
+
+})
+detail.addEventListener('click', (e) => {
+    const fermeBtn = e.target.closest('#ferme')
+    if(!fermeBtn) return
+    
+    clearDetail()
 })
 
 // -------------------------------get the last filter selected ----------------

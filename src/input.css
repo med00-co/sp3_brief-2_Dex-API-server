@@ -98,3 +98,9 @@
     hover:bg-stone-800;
   }
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
