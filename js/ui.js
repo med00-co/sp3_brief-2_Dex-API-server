@@ -35,7 +35,7 @@ function createCard(card){
    const attrNameForEffect = card.attribute != "Spell/Trap" ? card.attribute : "Spell_Trap"
     article.className = cardClass
     article.classList.add(glowClasses[attrNameForEffect])
-    article.setAttribute("data-attribute", `${card.attribute}`)
+    article.setAttribute("data-attribute", card.attribute)
     article.dataset.id = card.id
     const attributeClass = attrClasses[attrNameForEffect]
 
