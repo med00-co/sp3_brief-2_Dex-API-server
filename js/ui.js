@@ -51,7 +51,7 @@ function createCard(card){
         data-id="${card.id}" 
         aria-label="Modifier" 
         title="Modifier"
-        class="hidden edit-btn flex h-8 w-8 items-center justify-center rounded-full border border-amber-500/50 bg-stone-950/85 text-amber-400 shadow-md backdrop-blur-sm transition hover:border-amber-300 hover:bg-amber-500 hover:text-stone-950">
+        class="edit-btn flex h-8 w-8 items-center justify-center rounded-full border border-amber-500/50 bg-stone-950/85 text-amber-400 shadow-md backdrop-blur-sm transition hover:border-amber-300 hover:bg-amber-500 hover:text-stone-950">
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
         </svg>
@@ -62,7 +62,7 @@ function createCard(card){
         data-id="${card.id}" 
         aria-label="Supprimer" 
         title="Supprimer"
-        class="hidden delete-btn flex h-8 w-8 items-center justify-center rounded-full border border-red-500/50 bg-stone-950/85 text-red-400 shadow-md backdrop-blur-sm transition hover:border-red-400 hover:bg-red-600 hover:text-white">
+        class="delete-btn flex h-8 w-8 items-center justify-center rounded-full border border-red-500/50 bg-stone-950/85 text-red-400 shadow-md backdrop-blur-sm transition hover:border-red-400 hover:bg-red-600 hover:text-white">
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
         </svg>
@@ -467,4 +467,26 @@ export const fillForm = (values) => {
         const field = form.elements[name]
         if (field) field.value = value
     })
+}
+
+// ------------------------------------------------setFormMode(isEdit)
+export const setFormMode = (isEdit) => {
+    const title = document.querySelector('#create h2')
+    const submit = document.querySelector('#creature-form button[type="submit"]')
+    const reset = document.querySelector('#creature-form button[type="reset"]')
+
+    title.textContent = isEdit ? "Modifier la créature" : "Nouvelle créature"
+    submit.textContent = isEdit ? "Enregistrer les modifications" : "Ajouter la créature"
+    submit.dataset.label = submit.textContent
+    reset.textContent = isEdit ? "Annuler" : "Effacer"
+}
+
+// ------------------------------------------------showToast(text, isError)
+export const showToast = (text, isError = false) => {
+    const toast = document.createElement('div')
+    toast.setAttribute('role', 'status')
+    toast.className = `fixed bottom-6 right-6 z-50 rounded-lg px-4 py-3 text-sm font-bold text-white shadow-lg ${isError ? 'bg-invalid' : 'bg-valid'}`
+    toast.textContent = text
+    document.body.appendChild(toast)
+    setTimeout(() => toast.remove(), 3000)
 }

@@ -270,6 +270,9 @@
   .absolute {
     position: absolute;
   }
+  .fixed {
+    position: fixed;
+  }
   .relative {
     position: relative;
   }
@@ -282,8 +285,17 @@
   .right-2 {
     right: calc(var(--spacing) * 2);
   }
+  .right-6 {
+    right: calc(var(--spacing) * 6);
+  }
+  .bottom-6 {
+    bottom: calc(var(--spacing) * 6);
+  }
   .left-3 {
     left: calc(var(--spacing) * 3);
+  }
+  .z-50 {
+    z-index: 50;
   }
   .col-span-full {
     grid-column: 1 / -1;
@@ -763,6 +775,9 @@
       background-color: color-mix(in oklab, var(--color-gold) 80%, transparent);
     }
   }
+  .bg-invalid {
+    background-color: var(--color-invalid);
+  }
   .bg-orange-950 {
     background-color: var(--color-orange-950);
   }
@@ -871,6 +886,9 @@
       background-color: color-mix(in oklab, var(--color-stone-950) 90%, transparent);
     }
   }
+  .bg-valid {
+    background-color: var(--color-valid);
+  }
   .bg-yellow-950 {
     background-color: var(--color-yellow-950);
   }
@@ -969,6 +987,9 @@
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
   }
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
