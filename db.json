@@ -170,11 +170,11 @@
       "name": "The Mentalist",
       "attribute": "Divine",
       "level": 10,
-      "atk": 3500,
-      "def": 2600,
+      "atk": 3750,
+      "def": 2650,
       "image": "https://www.lulu-berlu.com/upload/image/the-mentalist---patrick-jane-fbi-id-badge-replica-p-image-594857-grande.jpg",
-      "description": "he can read what inside your minds",
-      "id": 16
+      "description": "He can read what inside your mind. He is Patrick Jane .",
+      "id": 17
     }
   ],
   "teams": []

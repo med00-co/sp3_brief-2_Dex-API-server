@@ -1,5 +1,5 @@
 // imports -----------------------------------------------
-import { getCreatures, getCreature, createCreature } from "./api.js"
+import { getCreatures, getCreature, createCreature, deleteCreature , updateCreature ,  } from "./api.js"
 import { validateCreature } from "./rules.js"
 import { getSavedFilter, saveFilter, saveDraft, getDraft, clearDraft } from "./storage.js"
 
@@ -7,7 +7,7 @@ import { renderGrid, showLoading , updateCount, showStatus,
      hideStatus , updateFilterDesign, showDetailLoading,
      renderDetail,
      showDetailError, clearDetail , clearFieldErrors, showFieldErrors,
-     showFormMessage, setFormLoading, fillForm, } from "./ui.js";
+     showFormMessage, setFormLoading, fillForm, setFormMode , showToast ,} from "./ui.js";
 
 
 
@@ -110,17 +110,16 @@ const loadDetail = async (id) => {
 }
 
 //----------------show detail of cards clicked--------------------
-grid.addEventListener('click', (e) =>{
+grid.addEventListener('click', (e) => {
+    const editBtn = e.target.closest('.edit-btn')
+    if (editBtn) { startEdit(editBtn.dataset.id); return }
+
+    const deleteBtn = e.target.closest('.delete-btn')
+    if (deleteBtn) { removeCreature(deleteBtn.dataset.id, deleteBtn); return }
+
     const cardClicked = e.target.closest('article')
     if (!cardClicked) return
     loadDetail(cardClicked.dataset.id)
-
-})
-detail.addEventListener('click', (e) => {
-    const fermeBtn = e.target.closest('#ferme')
-    if(!fermeBtn) return
-    
-    clearDetail()
 })
 
 // -------------------------------get the last filter selected ----------------
@@ -157,18 +156,21 @@ form.addEventListener('submit', async (e) => {
 
     setFormLoading(true)
     try {
-        await createCreature(toPayload(raw))
-        showFormMessage("Créature ajoutée avec succès.")
-        form.reset()
-        clearDraft()
+        if (editingId) {
+            const id = editingId
+            await updateCreature(id, toPayload(raw))
+            showFormMessage("Créature modifiée avec succès.")
+            exitEditMode()
+            if (detail.dataset.id === String(id)) loadDetail(id)
+        } else {
+            await createCreature(toPayload(raw))
+            showFormMessage("Créature ajoutée avec succès.")
+            form.reset()
+            clearDraft()
+        }
         await loadCreatures()
     } catch (error) {
-        showFormMessage(
-            error.status
-                ? `Erreur du serveur (${error.status}).`
-                : "Impossible de joindre l’API. Vérifie que json-server est lancé.",
-            true
-        )
+        showFormMessage(apiErrorMessage(error), true)
     } finally {
         setFormLoading(false)
     }
@@ -176,12 +178,19 @@ form.addEventListener('submit', async (e) => {
 
 // ---------------------------------------- DRAFT (SessionStorage)
 form.addEventListener('input', () => {
+    if (editingId) return            // fach kanmodifiew pas de brouillon
     saveDraft(Object.fromEntries(new FormData(form)))
 })
 
 form.addEventListener('reset', () => {
-    clearDraft()
+    if (!editingId) clearDraft()
     clearFieldErrors()
+})
+
+form.querySelector('button[type="reset"]').addEventListener('click', (e) => {
+    if (!editingId) return
+    e.preventDefault()               
+    exitEditMode()
 })
 
 const draft = getDraft()
@@ -189,6 +198,58 @@ if (draft) fillForm(draft)
 
 // Firefox kayhafd 3la lvaleur dyal select hta mn b3d refresh F5
 sortPlace.value = ""
+
+
+
+// ---------------------------------------- EDIT / DELETE (Part 3)
+let editingId = null
+
+const apiErrorMessage = (error) => {
+    if (error.status === 404) return "Créature introuvable."
+    if (error.status) return `Erreur du serveur (${error.status}).`
+    return "Impossible de joindre l’API. Vérifie que json-server est lancé."
+}
+
+const exitEditMode = () => {
+    form.reset()            // editingId yallah 3rftha donc lbrouillon ghatkon mzl matmshatch  
+    editingId = null
+    setFormMode(false)
+    clearFieldErrors()
+    const saved = getDraft()
+    if (saved) fillForm(saved)
+}
+
+const startEdit = async (id) => {
+    showFormMessage("")
+    clearFieldErrors()
+    try {
+        const creature = await getCreature(id)
+        editingId = String(id)
+        fillForm(creature)
+        setFormMode(true)
+        document.getElementById('create').scrollIntoView({ behavior: 'smooth' })
+    } catch (error) {
+        showToast(apiErrorMessage(error), true)
+        if (error.status === 404) await loadCreatures()
+    }
+}
+
+const removeCreature = async (id, btn) => {
+    if (!confirm("Supprimer cette créature définitivement ?")) return
+    btn.disabled = true
+    try {
+        await deleteCreature(id)
+        showToast("Créature supprimée.")
+        if (detail.dataset.id === String(id)) clearDetail()
+        if (editingId === String(id)) exitEditMode()
+        await loadCreatures()
+    } catch (error) {
+        showToast(apiErrorMessage(error), true)
+        if (error.status === 404) await loadCreatures()
+    } finally {
+        btn.disabled = false
+    }
+}
 // --------------------------------------------------------------final thing
 
 loadCreatures()
