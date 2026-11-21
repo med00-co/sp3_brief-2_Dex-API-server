@@ -268,7 +268,7 @@ export const renderDetail = (creature) => {
 
     // -----------Image---------
     const imgWrapper = document.createElement("div");
-    imgWrapper.className = "relative flex h-90 items-center justify-center rounded-xl bg-brand-light overflow-hidden";
+    imgWrapper.className = "relative flex mx-auto h-100 w-69 items-center justify-center rounded-xl bg-brand-light overflow-hidden";
 
     const img = document.createElement("img");
     img.src = creature.image;
@@ -426,9 +426,45 @@ export const clearDetail = () => {
 };
 
 // ---------------------------------------------------------clearFieldErrors()
-export const clearFieldErrors = () =>{
-    const errorMessages = document.querySelectorAll('.error-message')
-    errorMessages.forEach((mer) =>{
-        mer.innerHTML = ""
+export const clearFieldErrors = () => {
+    document.querySelectorAll('.error-message').forEach((el) => {
+        el.textContent = ""
+    })
+}
+
+// --------------------------------------------------------showFieldErrors(errors)
+export const showFieldErrors = (errors) => {
+    const form = document.getElementById('creature-form')
+    Object.entries(errors).forEach(([name, message]) => {
+        const field = form.elements[name]
+        if (!field) return
+        const span = field.closest('label')?.querySelector('.error-message')
+        if (span) span.textContent = message
+    })
+}
+
+// --------------------------------------------------------showFormMessage(text, isError = false)
+export const showFormMessage = (text, isError = false) => {
+    const msg = document.getElementById('form-message')
+    msg.textContent = text
+    msg.classList.toggle('text-valid', !isError)
+    msg.classList.toggle('text-invalid', isError)
+}
+
+// -----------------------------------------------------------setFormLoading(isLoading)
+export const setFormLoading = (isLoading) => {
+    const btn = document.querySelector('#creature-form button[type="submit"]')
+    if (!btn) return
+    if (!btn.dataset.label) btn.dataset.label = btn.textContent
+    btn.disabled = isLoading
+    btn.textContent = isLoading ? "Envoi…" : btn.dataset.label
+}
+
+// -------------------------------------------------------fillForm(values)
+export const fillForm = (values) => {
+    const form = document.getElementById('creature-form')
+    Object.entries(values).forEach(([name, value]) => {
+        const field = form.elements[name]
+        if (field) field.value = value
     })
 }

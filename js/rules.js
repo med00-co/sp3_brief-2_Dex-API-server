@@ -27,7 +27,7 @@ export const validateCreature = (data) => {
     // numero
     const numero = Number(data.numero)
     if(!data.numero || isNaN(numero) || numero <= 0 || !Number.isInteger(numero)) {
-        errors.numero = "Le numéro doit etre un entier positif."
+        errors.numero = "Le numéro doit être un entier positif."
     }
 
     // atk 
@@ -53,7 +53,7 @@ export const validateCreature = (data) => {
     if (!data.image || data.image.trim() === "") {
         errors.image = "Le lien de l'image est obligatoire.";
     }else if (!imageRegex.test(data.image)) {
-        errors.image = "Le lien de l'image doit commencer par http."
+        errors.image = "Le lien de l'image doit commencer par https et fini par .png/jpg/jpeg ."
     }
     
     return errors ;
