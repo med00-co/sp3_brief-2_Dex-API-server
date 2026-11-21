@@ -4,6 +4,10 @@ Projet YouCode — Sprint 3, Brief 2 : *Le Dex et mes équipes*.
 
 Évolution de mon Dex du Sprint 2 : `data.js` et le LocalStorage sont remplacés par une API locale **json-server**. L'application lit, ajoute, modifie et supprime les créatures (cartes Yu-Gi-Oh!) via `fetch`, avec `async/await`, `try/catch` et la vérification de `response.ok`.
 
+## Live Demo :  
+
+lien du GitHub Pages : https://med00-co.github.io/sp3_brief-2_Dex-API-server/
+
 ## Fonctionnalités
 
 ### Partie 1 — Le Dex connecté à l'API
