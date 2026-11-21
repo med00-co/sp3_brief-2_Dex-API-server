@@ -156,18 +156,21 @@ form.addEventListener('submit', async (e) => {
 
     setFormLoading(true)
     try {
-        await createCreature(toPayload(raw))
-        showFormMessage("Créature ajoutée avec succès.")
-        form.reset()
-        clearDraft()
+        if (editingId) {
+            const id = editingId
+            await updateCreature(id, toPayload(raw))
+            showFormMessage("Créature modifiée avec succès.")
+            exitEditMode()
+            if (detail.dataset.id === String(id)) loadDetail(id)
+        } else {
+            await createCreature(toPayload(raw))
+            showFormMessage("Créature ajoutée avec succès.")
+            form.reset()
+            clearDraft()
+        }
         await loadCreatures()
     } catch (error) {
-        showFormMessage(
-            error.status
-                ? `Erreur du serveur (${error.status}).`
-                : "Impossible de joindre l’API. Vérifie que json-server est lancé.",
-            true
-        )
+        showFormMessage(apiErrorMessage(error), true)
     } finally {
         setFormLoading(false)
     }
