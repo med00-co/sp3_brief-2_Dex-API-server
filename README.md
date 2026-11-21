@@ -6,7 +6,11 @@ Projet YouCode — Sprint 3, Brief 2 : *Le Dex et mes équipes*.
 
 ## Live Demo :  
 
-lien du GitHub Pages : https://med00-co.github.io/sp3_brief-2_Dex-API-server/
+lien de GitHub Pages : https://med00-co.github.io/sp3_brief-2_Dex-API-server/
+
+## Planification 
+
+lien de GitHub Projects : https://github.com/users/med00-co/projects/17
 
 ## Fonctionnalités
 
