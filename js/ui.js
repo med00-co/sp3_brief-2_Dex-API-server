@@ -1,3 +1,6 @@
+// VARIABLES -----------------------------------------------
+
+
 // -----------------------------------------------glowClasses
 export const glowClasses = {
   Fire:   "shadow-attr-fire/60",
@@ -32,7 +35,7 @@ function createCard(card){
    const attrNameForEffect = card.attribute != "Spell/Trap" ? card.attribute : "Spell_Trap"
     article.className = cardClass
     article.classList.add(glowClasses[attrNameForEffect])
-    article.setAttribute("data-attribute", `${card.attribute}`)
+    article.setAttribute("data-attribute", card.attribute)
     article.dataset.id = card.id
     const attributeClass = attrClasses[attrNameForEffect]
 
@@ -48,7 +51,7 @@ function createCard(card){
         data-id="${card.id}" 
         aria-label="Modifier" 
         title="Modifier"
-        class="hidden edit-btn flex h-8 w-8 items-center justify-center rounded-full border border-amber-500/50 bg-stone-950/85 text-amber-400 shadow-md backdrop-blur-sm transition hover:border-amber-300 hover:bg-amber-500 hover:text-stone-950">
+        class="edit-btn flex h-8 w-8 items-center justify-center rounded-full border border-amber-500/50 bg-stone-950/85 text-amber-400 shadow-md backdrop-blur-sm transition hover:border-amber-300 hover:bg-amber-500 hover:text-stone-950">
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
         </svg>
@@ -59,7 +62,7 @@ function createCard(card){
         data-id="${card.id}" 
         aria-label="Supprimer" 
         title="Supprimer"
-        class="hidden delete-btn flex h-8 w-8 items-center justify-center rounded-full border border-red-500/50 bg-stone-950/85 text-red-400 shadow-md backdrop-blur-sm transition hover:border-red-400 hover:bg-red-600 hover:text-white">
+        class="delete-btn flex h-8 w-8 items-center justify-center rounded-full border border-red-500/50 bg-stone-950/85 text-red-400 shadow-md backdrop-blur-sm transition hover:border-red-400 hover:bg-red-600 hover:text-white">
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
         </svg>
@@ -182,4 +185,308 @@ export const updateFilterDesign = (activeAttribute = "")=>{
       .querySelector(`[data-attribute="${activeAttribute}"]`)
       ?.classList.add("active");
   }
+}
+
+// ----------------------------------------------------------showDetailLoading()
+export const showDetailLoading = () => {
+  const detail = document.getElementById("detail");
+  if (!detail) return;
+
+  detail.innerHTML = ""; 
+  detail.className = "flex flex-col gap-4 rounded-2xl border border-panel-border/60 bg-panel/90 p-6 shadow-[0_0_40px_rgba(201,162,39,0.18)] backdrop-blur-sm";
+
+  const loader = document.createElement("div");
+  loader.className = "relative w-full overflow-hidden rounded-xl border border-stone-700/50 bg-stone-900/80 p-4";
+  loader.setAttribute("role", "status");
+  loader.setAttribute("aria-label", "Chargement");
+
+  
+  loader.innerHTML = `
+    <div class="relative space-y-4">
+      <!-- Image skeleton -->
+      <div class="h-48 w-full rounded-xl bg-stone-700/60"></div>
+
+      <!-- Title skeleton -->
+      <div class="h-6 w-3/4 rounded bg-stone-700/60"></div>
+
+      <!-- Badge skeleton -->
+      <div class="h-5 w-20 rounded-full bg-stone-700/60"></div>
+
+      <!-- Lines skeleton -->
+      <div class="space-y-2">
+        <div class="h-3 w-full rounded bg-stone-700/50"></div>
+        <div class="h-3 w-5/6 rounded bg-stone-700/50"></div>
+        <div class="h-3 w-4/6 rounded bg-stone-700/50"></div>
+      </div>
+
+      <!-- Stats skeleton -->
+      <div class="space-y-3 pt-2">
+        <div class="h-3 w-full rounded bg-stone-700/40"></div>
+        <div class="h-3 w-full rounded bg-stone-700/40"></div>
+      </div>
+    </div>
+
+    <!-- Shimmer effect -->
+    <div class="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_1.4s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+  `;
+
+  detail.appendChild(loader);
+};
+
+
+// ----------------------------------------------------------renderDetail(creature)
+export const renderDetail = (creature) => {
+    const detail = document.getElementById('detail')
+    if(!detail) return ;
+
+    detail.innerHTML = ""
+    detail.className = "flex flex-col gap-4 rounded-2xl border border-panel-border/60 bg-panel/90 p-6 shadow-[0_0_40px_rgba(201,162,39,0.18)] backdrop-blur-sm";
+
+    const attrKey = creature.attribute === "Spell/Trap" ? "Spell_Trap" : creature.attribute;
+    detail.classList.remove(...Object.values(glowClasses));
+    if (glowClasses[attrKey]) {
+      detail.classList.add(glowClasses[attrKey]);
+    }
+
+//   ---------Header ---
+    const header = document.createElement("div");
+    header.className = "flex items-center justify-between";
+
+    const numero = document.createElement("span");
+    numero.className = "font-mono text-sm text-muted";
+    numero.textContent = `#${String(creature.numero || creature.id).padStart(3, "0")} · Détail`;
+
+    const closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.id = "ferme";
+    closeBtn.setAttribute("aria-label", "Fermer le détail");
+    closeBtn.className = "btn-outline w-11 px-0 hover:bg-invalid";
+    closeBtn.textContent = "✕";
+
+    header.append(numero, closeBtn);
+    detail.appendChild(header);
+
+    // -----------Image---------
+    const imgWrapper = document.createElement("div");
+    imgWrapper.className = "relative flex mx-auto h-100 w-69 items-center justify-center rounded-xl bg-brand-light overflow-hidden";
+
+    const img = document.createElement("img");
+    img.src = creature.image;
+    img.alt = creature.name;
+    img.loading = "lazy";
+    img.className = "h-full w-full object-contain";
+
+    imgWrapper.appendChild(img);
+    detail.appendChild(imgWrapper);
+
+    // ----------Nom , Badge -----------
+    const nameRow = document.createElement("div");
+    nameRow.className = "flex items-center justify-between gap-2";
+
+    const title = document.createElement("h2");
+    title.className = "font-display text-2xl font-extrabold text-gold-light sm:text-3xl";
+    title.textContent = creature.name;
+
+    const badge = document.createElement("span");
+    badge.className = `rounded-full px-3 py-1 text-sm font-bold text-white ${attrClasses[attrKey] || "bg-stone-600"}`;
+    badge.textContent = creature.attribute;
+
+    nameRow.append(title, badge);
+    detail.appendChild(nameRow);
+
+    // ---------Description --------
+    const description = document.createElement("p");
+    description.className = "text-sm leading-relaxed text-white/80 whitespace-pre-line";
+    description.textContent = creature.description || "Aucune description.";
+    detail.appendChild(description);
+
+    // --------Stats----------------
+    const stats = document.createElement("div");
+    stats.className = "flex flex-col gap-3 text-sm text-white";
+
+    // ---------Level ----------------
+    const level = Math.max(0, Math.min(Number(creature.level) || 0, 12));
+    if (level > 0) {
+        const levelBlock = document.createElement("div");
+        levelBlock.className = "flex flex-col gap-1";
+
+        const levelHeader = document.createElement("div");
+        levelHeader.className = "flex items-center justify-between";
+
+        const levelLabel = document.createElement("span");
+        levelLabel.className = "font-bold";
+        levelLabel.textContent = "Étoiles";
+
+        const levelValue = document.createElement("span");
+        levelValue.className = "font-mono";
+        levelValue.textContent = `${level} / 12`;
+
+        levelHeader.append(levelLabel, levelValue);
+
+        const stars = document.createElement("div");
+        stars.className = "flex flex-wrap gap-0.5 text-xl leading-none";
+        stars.setAttribute("role", "img");
+        stars.setAttribute("aria-label", `${level} étoiles sur 12`);
+
+        const filled = document.createElement("span");
+        filled.className = "text-gold";
+        filled.textContent = "★".repeat(level);
+
+        const empty = document.createElement("span");
+        empty.className = "text-white/20";
+        empty.textContent = "★".repeat(12 - level);
+
+        stars.append(filled, empty);
+        levelBlock.append(levelHeader, stars);
+        stats.appendChild(levelBlock);
+    }
+
+    // -------------- Function helper for ATK DEF -------
+    const createStatBar = (label, value, max = 5000) => {
+        const row = document.createElement("div");
+        row.className = "grid grid-cols-[50px_1fr_50px] items-center gap-2";
+
+        const name = document.createElement("span");
+        name.className = "font-bold";
+        name.textContent = label;
+
+        const barBg = document.createElement("span");
+        barBg.className = "h-3 overflow-hidden rounded-full bg-brand-light";
+
+        const barFill = document.createElement("span");
+        barFill.className = "block h-3 rounded-full bg-brand transition-all duration-500";
+        const percent = typeof value === "number" ? Math.min((value / max) * 100, 100) : 0;
+        barFill.style.width = `${percent}%`;
+
+        barBg.appendChild(barFill);
+
+        const number = document.createElement("span");
+        number.className = "text-right font-mono";
+        number.textContent = value ?? "—";
+
+        row.append(name, barBg, number);
+        return row;
+    };
+
+    stats.appendChild(createStatBar("ATK", creature.atk));
+    stats.appendChild(createStatBar("DEF", creature.def));
+
+    detail.appendChild(stats);
+
+
+    detail.dataset.id = creature.id;
+  
+}
+// ----------------------------------------------------------showDetailError(message)
+export const showDetailError = (message = "Créature introuvable") => {
+    const detail = document.getElementById("detail");
+    if (!detail) return;
+
+    detail.innerHTML = "";
+    detail.className = "flex flex-col items-center justify-center gap-4 rounded-2xl border border-panel-border/60 bg-panel/90 p-8 text-center shadow-[0_0_40px_rgba(201,162,39,0.18)] backdrop-blur-sm";
+
+    const icon = document.createElement("div");
+    icon.className = "text-4xl";
+    icon.textContent = "⚠️";
+
+    const title = document.createElement("h2");
+    title.className = "font-display text-xl font-bold text-gold-light";
+    title.textContent = "Erreur";
+
+    const text = document.createElement("p");
+    text.className = "text-sm text-white/70";
+    text.textContent = message;
+
+    detail.append(icon, title, text);
+}
+
+
+// --------------------------------------------------------------clearDetail()
+export const clearDetail = () => {
+  const detail = document.getElementById("detail");
+  if (!detail) return;
+
+  
+  detail.className = "flex flex-col gap-4 rounded-2xl border border-panel-border/60 bg-panel/90 p-6 shadow-[0_0_40px_rgba(201,162,39,0.18)] backdrop-blur-sm";
+
+ 
+  detail.classList.remove(...Object.values(glowClasses));
+
+  
+  detail.innerHTML = "";
+
+  const title = document.createElement("h2");
+  title.className = "text-center font-display text-2xl font-extrabold text-gold-light";
+  title.textContent = "Choose a card";
+
+  detail.appendChild(title);
+
+  
+  delete detail.dataset.id;
+};
+
+// ---------------------------------------------------------clearFieldErrors()
+export const clearFieldErrors = () => {
+    document.querySelectorAll('.error-message').forEach((el) => {
+        el.textContent = ""
+    })
+}
+
+// --------------------------------------------------------showFieldErrors(errors)
+export const showFieldErrors = (errors) => {
+    const form = document.getElementById('creature-form')
+    Object.entries(errors).forEach(([name, message]) => {
+        const field = form.elements[name]
+        if (!field) return
+        const span = field.closest('label')?.querySelector('.error-message')
+        if (span) span.textContent = message
+    })
+}
+
+// --------------------------------------------------------showFormMessage(text, isError = false)
+export const showFormMessage = (text, isError = false) => {
+    const msg = document.getElementById('form-message')
+    msg.textContent = text
+    msg.classList.toggle('text-valid', !isError)
+    msg.classList.toggle('text-invalid', isError)
+}
+
+// -----------------------------------------------------------setFormLoading(isLoading)
+export const setFormLoading = (isLoading) => {
+    const btn = document.querySelector('#creature-form button[type="submit"]')
+    if (!btn) return
+    if (!btn.dataset.label) btn.dataset.label = btn.textContent
+    btn.disabled = isLoading
+    btn.textContent = isLoading ? "Envoi…" : btn.dataset.label
+}
+
+// -------------------------------------------------------fillForm(values)
+export const fillForm = (values) => {
+    const form = document.getElementById('creature-form')
+    Object.entries(values).forEach(([name, value]) => {
+        const field = form.elements[name]
+        if (field) field.value = value
+    })
+}
+
+// ------------------------------------------------setFormMode(isEdit)
+export const setFormMode = (isEdit) => {
+    const title = document.querySelector('#create h2')
+    const submit = document.querySelector('#creature-form button[type="submit"]')
+    const reset = document.querySelector('#creature-form button[type="reset"]')
+
+    title.textContent = isEdit ? "Modifier la créature" : "Nouvelle créature"
+    submit.textContent = isEdit ? "Enregistrer les modifications" : "Ajouter la créature"
+    submit.dataset.label = submit.textContent
+    reset.textContent = isEdit ? "Annuler" : "Effacer"
+}
+
+// ------------------------------------------------showToast(text, isError)
+export const showToast = (text, isError = false) => {
+    const toast = document.createElement('div')
+    toast.setAttribute('role', 'status')
+    toast.className = `fixed bottom-6 right-6 z-50 rounded-lg px-4 py-3 text-sm font-bold text-white shadow-lg ${isError ? 'bg-invalid' : 'bg-valid'}`
+    toast.textContent = text
+    document.body.appendChild(toast)
+    setTimeout(() => toast.remove(), 3000)
 }
