@@ -1,87 +1,108 @@
-# Mon Dex - Yu-Gi-Oh! (API)
+# Mon Dex — Dex API Server (Yu-Gi-Oh!)
 
-Application web de gestion d'un Dex de créatures Yu-Gi-Oh!, connectée à une API locale via `json-server`.  
-Ce projet remplace les données statiques et le `LocalStorage` par une véritable API REST.
+Projet YouCode — Sprint 3, Brief 2.
+Évolution de mon Dex du Sprint 2 : `data.js` et le LocalStorage sont remplacés par une API locale **json-server**.
 
----
+## Fonctionnalités
 
-## Fonctionnalités (Partie 1)
+### Partie 1 — Dex connecté à l'API
+- Affichage des créatures depuis `GET /creatures` (état « Chargement… » et message d'erreur clair)
+- Filtre par attribut, envoyé à l'API (`?attribute=`)
+- Recherche côté serveur (`?q=`), combinable avec le filtre
+- Mémorisation du dernier filtre dans le **LocalStorage**
 
-- **Affichage dynamique :** Récupération et affichage de la liste des créatures depuis l'API.
-- **Filtrage par attribut :** Tri des créatures (`Fire`, `Water`, `Dark`, `Earth`, `Wind`, `Light`, `Divine`).
-- **Recherche textuelle :** Recherche instantanée via paramètre de requête (`?q=`).
-- **Filtrage combiné :** Association simultanée du filtre par attribut et de la recherche textuelle.
-- **Gestion des états UI :**
-  - Indicateur de chargement pendant les requêtes API.
-  - Messages d'erreur explicites (ex. : serveur API arrêté) ou d'absence de résultats.
-- **Persistance :** Mémorisation du dernier filtre sélectionné dans le `LocalStorage`.
+### Partie 2 — Trier, consulter et ajouter
+- Tri par nom ou par numéro (`?_sort=` et `&_order=`), combinable avec la recherche et le filtre
+- Fiche détaillée avec `GET /creatures/:id` (message « Créature introuvable » si 404)
+- Ajout d'une créature avec `POST /creatures`
+- Validation du formulaire (`validateCreature`) avec un message sous chaque champ erroné
+- Brouillon du formulaire conservé dans le **SessionStorage** (effacé à l'ajout, au reset et à la fermeture de l'onglet)
 
----
+### Partie 3 — à venir
+- Modification (`PUT`) et suppression (`DELETE`)
+- États de l'interface et finition
+
+## Technologies
+- HTML5, Tailwind CSS
+- JavaScript (modules ES), Fetch API, async/await
+- json-server 0.17.4
 
 ## Prérequis
+- Node.js
+- Une extension de serveur local (par exemple Live Server), car les modules ES ne fonctionnent pas en `file://`
 
-- **Node.js** (version 18 ou supérieure recommandée)
-- **Serveur local** (extension *Live Server* sur VS Code ou équivalent)
+## Installation
 
----
+```bash
+npm install
+```
 
-## Installation et Lancement
+## Lancer le projet
 
-1. **Cloner le dépôt :**
-   ```bash
-   git clone https://github.com/med00-co/sp3_brief-2_Dex-API-server.git
-   cd sp3_brief-2_Dex-API-server
-   ```
+1. Lancer l'API (laisser ce terminal ouvert) :
 
-2. **Installer les dépendances :**
-   ```bash
-   npm install
-   ```
+```bash
+npx json-server --watch db.json --port 3000
+```
 
-3. **Démarrer le serveur API (`json-server` v0.17.4) :**
-   ```bash
-   npx json-server --watch db.json --port 3000
-   ```
-   > L'API sera accessible à l'adresse : `http://localhost:3000`
+L'API répond sur `http://localhost:3000`.
 
-4. **Lancer l'interface front-end :**
-   - Ouvrir le dossier du projet avec **Live Server** (ou tout autre serveur HTTP local).
+2. Compiler Tailwind (adapter la commande à `package.json`) :
 
----
+```bash
+npm run dev
+```
+
+3. Ouvrir `index.html` avec Live Server.
+
+> Le projet se montre en local : l'API tourne sur l'ordinateur, il n'est donc pas hébergé sur GitHub Pages.
 
 ## Structure du projet
 
+```
+├── index.html
+├── db.json
+├── js/
+│   ├── api.js
+│   ├── rules.js
+│   ├── storage.js
+│   ├── ui.js
+│   └── main.js
+└── src/
+    ├── input.css
+    └── output.css
+```
+
 | Fichier | Rôle |
-| :--- | :--- |
-| `js/api.js` | Centralise `request()` (unique point d'appel `fetch`) et les méthodes API (`getCreatures`, `getCreature`, `createCreature`, etc.). |
-| `js/rules.js` | Contient la logique et les règles de validation métier (découplées du DOM). |
-| `js/storage.js` | Gère le `LocalStorage` (dernier filtre) et le `SessionStorage` (brouillon de formulaire). |
-| `js/ui.js` | Gère le rendu de l'interface : grille des créatures, états de chargement et messages d'alerte. |
-| `js/main.js` | Point d'entrée de l'application : initialisation, écouteurs d'événements et orchestration. |
+|---|---|
+| `api.js` | Le seul fichier qui appelle `fetch` : `request(method, route, body)` et les fonctions d'appel (`getCreatures`, `getCreature`, `createCreature`, `updateCreature`, `deleteCreature`) |
+| `rules.js` | Les règles, sans DOM : `validateCreature(data)` |
+| `storage.js` | Le dernier filtre (LocalStorage) et le brouillon du formulaire (SessionStorage), jamais les créatures |
+| `ui.js` | L'affichage : grille, fiche, formulaire, messages |
+| `main.js` | Le point de départ : les écouteurs, qui appellent `api.js` puis `ui.js` |
 
----
+## Routes de l'API utilisées
 
-## Routes API utilisées (Partie 1)
-
-| Méthode | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/creatures` | Récupère la liste complète des créatures. |
-| `GET` | `/creatures?attribute=Dark` | Filtre les créatures par attribut. |
-| `GET` | `/creatures?q=magician` | Effectue une recherche textuelle globale. |
-| `GET` | `/creatures?attribute=Dark&q=magician` | Combine le filtre d'attribut et la recherche textuelle. |
-
----
+| Méthode | Route | Usage |
+|---|---|---|
+| GET | `/creatures` | Liste des créatures |
+| GET | `/creatures?attribute=Fire&q=dark&_sort=name&_order=asc` | Filtre, recherche et tri combinés |
+| GET | `/creatures/:id` | Fiche d'une créature |
+| POST | `/creatures` | Ajouter une créature |
 
 ## Choix techniques
+- **Attribut = type** : dans l'univers Yu-Gi-Oh!, le type d'une créature correspond à son attribut ; le paramètre utilisé est donc `attribute`.
+- **Gestion des erreurs** : chaque appel est dans un `try/catch` et vérifie `response.ok`. Une erreur serveur (avec statut) et une erreur réseau (json-server arrêté, sans statut) donnent des messages différents.
+- **Sécurité** : les données de l'API sont affichées avec `createElement` et `textContent`.
+- **Validation** : les règles sont dans `rules.js`, sans accès au DOM. Les valeurs du formulaire sont converties en nombres avant l'envoi.
+- **Stats ATK/DEF** : bornes de 0 à 4000, adaptées aux cartes Yu-Gi-Oh!.
 
-- **Centralisation réseau :** Tous les appels HTTP transitent exclusivement par la fonction `request()` dans `js/api.js`.
-- **Sécurité et manipulation du DOM :** Création sécurisée des éléments via `document.createElement` et `textContent` (aucun `innerHTML` utilisé pour les données dynamiques).
-- **Asynchronisme et robustesse :** Utilisation de `async/await`, blocs `try/catch` et vérification systématique de `response.ok`.
-- **Persistance utilisateur :** Sauvegarde automatique du dernier filtre actif dans le `LocalStorage`.
 
----
+
 
 ## Auteur
 
 **Mohamed Id irrami**  
 *YouCode 2026-2027 — Sprint 3*
+
+Projet réalisé dans le cadre de la formation YouCode.
